@@ -17,8 +17,10 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
   Bird bird = Bird();
   bool isHitPip = false;
   late TextComponent score;
-  // late TextComponent bestScoreText;
   int bestScore = 0;
+  bool speedIncreasedAt25 = false;
+  bool speedIncreasedAt50 = false;
+
   @override
   Future<void> onLoad() async {
     bestScore = await getBestScore();
@@ -29,7 +31,6 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
         bird = Bird(),
         PipGroup(),
         score = buildScoreText(),
-        // bestScoreText = buildBestScoreText(),
       ],
     );
     interval.onTick = () => add(
@@ -42,7 +43,14 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
     super.update(dt);
     interval.update(dt);
     score.text = 'Score : ${bird.score}';
-    //  bestScoreText.text = 'Best Score : $bestScore';
+    if (bird.score >= 25 && !speedIncreasedAt25) {
+      increaseGameSpeed();
+      speedIncreasedAt25 = true;
+    }
+    if (bird.score >= 50 && !speedIncreasedAt50) {
+      increaseGameSpeed();
+      speedIncreasedAt50 = true;
+    }
   }
 
   @override
@@ -89,5 +97,9 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
       ),
       position: Vector2(size.x - 250, 10),
     );
+  }
+
+  void increaseGameSpeed() {
+    GameConfig.gameSpeed += 50; // Increase the game speed by 50
   }
 }

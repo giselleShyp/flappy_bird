@@ -16,7 +16,7 @@ class PipGroup extends PositionComponent with HasGameRef<FlappyBirdGame> {
     position.x = gameRef.size.x;
 
     final heightMinusGround = gameRef.size.y - GameConfig.gameGround;
-    final spacing = 100 + _random.nextDouble() * (heightMinusGround / 4);
+    final spacing = 200 + _random.nextDouble() * (heightMinusGround / 4);
     final centerY =
         spacing + _random.nextDouble() * (heightMinusGround - spacing);
     addAll(
