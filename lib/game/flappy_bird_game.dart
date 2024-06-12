@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -21,6 +22,9 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
   int bestScore = 0;
   @override
   Future<void> onLoad() async {
+    camera.viewport = FixedResolutionViewport(
+      resolution: Vector2(960, 640),
+    );
     bestScore = await getBestScore();
     await addAll(
       [
