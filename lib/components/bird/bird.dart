@@ -69,12 +69,12 @@ class Bird extends SpriteComponent
     FlameAudio.play(GameAssets.collision);
     gameRef.pauseEngine();
     game.isHitPip = true;
+    gameRef.overlays.add('gameOver');
     if (score > game.bestScore) {
       debugPrint('score > game.bestScore');
       game.bestScore = score;
       game.setBestScore(game.bestScore);
     }
-    gameRef.overlays.add('gameOver');
   }
 
   void reset() {
