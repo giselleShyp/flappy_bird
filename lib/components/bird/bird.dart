@@ -5,7 +5,6 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flappy_bird/components/bird/bird_movement.dart';
 import 'package:flappy_bird/core/config.dart';
 import 'package:flappy_bird/core/game_assets.dart';
 import 'package:flappy_bird/game/flappy_bird_game.dart';
@@ -21,8 +20,8 @@ class Bird extends SpriteComponent
     size = Vector2(50, 40);
     debugPrint('size 2 : ${size}');
     final birdMidFlap = await Flame.images.load(GameAssets.birdMidFlap);
-    final birdDownFlap = await gameRef.loadSprite(GameAssets.birdDownFlap);
-    final birdUpFlap = await gameRef.loadSprite(GameAssets.birdUpFlap);
+    // final birdDownFlap = await gameRef.loadSprite(GameAssets.birdDownFlap);
+    // final birdUpFlap = await gameRef.loadSprite(GameAssets.birdUpFlap);
     //  current = BirdMovement.middle;
 
     position = Vector2(50, gameRef.size.y / 2 - size.y / 2);
@@ -40,7 +39,11 @@ class Bird extends SpriteComponent
   void update(double dt) {
     super.update(dt);
     position.y += GameConfig.birdVelocity * dt;
-    debugPrint('size update : ${size}');
+
+    // Prevent the bird from going off the top of the screen
+    if (position.y < 0) {
+      position.y = 0;
+    }
   }
 
   void fly() {
