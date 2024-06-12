@@ -66,7 +66,7 @@ class Bird extends SpriteComponent
     gameOver();
   }
 
-  void gameOver() {
+  void gameOver() async {
     gameRef.pauseEngine();
     game.isHitPip = true;
     gameRef.overlays.add('gameOver');
@@ -75,6 +75,7 @@ class Bird extends SpriteComponent
       game.bestScore = score;
       game.setBestScore(game.bestScore);
     }
+    await FlameAudio.audioCache.clearAll();
   }
 
   void reset() {

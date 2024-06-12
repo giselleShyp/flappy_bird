@@ -43,14 +43,16 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
     super.update(dt);
     interval.update(dt);
     score.text = 'Score : ${bird.score}';
-    if (bird.score >= 25 && !speedIncreasedAt25) {
-      increaseGameSpeed();
-      speedIncreasedAt25 = true;
-    }
-    if (bird.score >= 50 && !speedIncreasedAt50) {
-      increaseGameSpeed();
-      speedIncreasedAt50 = true;
-    }
+    // if (bird.score >= 25 && !speedIncreasedAt25) {
+    //   increaseGameSpeed();
+    //   speedIncreasedAt25 = true;
+    // }
+    // if (bird.score >= 50 && !speedIncreasedAt50) {
+    //   increaseGameSpeed();
+    //   speedIncreasedAt50 = true;
+    // }
+    // Update game speed based on the current score
+    updateGameSpeed(bird.score);
   }
 
   @override
@@ -100,6 +102,11 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void increaseGameSpeed() {
-    GameConfig.gameSpeed += 50; // Increase the game speed by 50
+    GameConfig.gameSpeed += 50;
+  }
+
+  void updateGameSpeed(int score) {
+    GameConfig.gameSpeed = 200 + (score ~/ 5) * 15;
+    debugPrint('${GameConfig.gameSpeed}');
   }
 }
