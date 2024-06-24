@@ -62,13 +62,12 @@ class Bird extends SpriteComponent
   void onCollisionStart(
       Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
-    FlameAudio.play(GameAssets.collision);
     gameOver();
   }
 
   void gameOver() async {
-    await FlameAudio.audioCache.clearAll();
     gameRef.pauseEngine();
+    await FlameAudio.play(GameAssets.collision);
     game.isHitPip = true;
     gameRef.overlays.add('gameOver');
     if (score > game.bestScore) {

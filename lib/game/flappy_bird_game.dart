@@ -24,15 +24,6 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
   @override
   Future<void> onLoad() async {
     bestScore = await getBestScore();
-    await addAll(
-      [
-        Background(),
-        bird = Bird(),
-        PipGroup(),
-        score = buildScoreText(),
-      ],
-    );
-    await add(Ground());
     interval = Timer(
       GameConfig.pipeInterval,
       repeat: true,
@@ -41,6 +32,15 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
       ),
     );
     interval.start();
+    await addAll(
+      [
+        Background(),
+        bird = Bird(),
+        // PipGroup(),
+        score = buildScoreText(),
+      ],
+    );
+    await add(Ground());
   }
 
   @override
