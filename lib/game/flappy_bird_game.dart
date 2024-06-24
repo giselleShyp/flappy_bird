@@ -13,6 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
+  FlappyBirdGame() {
+    pauseWhenBackgrounded = true;
+  }
   late Timer interval;
   Bird bird = Bird();
   bool isHitPip = false;
