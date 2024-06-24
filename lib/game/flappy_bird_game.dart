@@ -29,10 +29,10 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
         Background(),
         bird = Bird(),
         PipGroup(),
-        Ground(),
         score = buildScoreText(),
       ],
     );
+    await add(Ground());
     interval = Timer(
       GameConfig.pipeInterval,
       repeat: true,
