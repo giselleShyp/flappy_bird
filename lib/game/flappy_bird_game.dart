@@ -27,9 +27,9 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
     await addAll(
       [
         Background(),
-        Ground(),
         bird = Bird(),
         PipGroup(),
+        Ground(),
         score = buildScoreText(),
       ],
     );
@@ -105,8 +105,17 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
   }
 
   void updatePipeInterval(int score) {
-    if (score > 10 && GameConfig.pipeInterval != 1.0) {
-      GameConfig.pipeInterval = 1.0;
+    double newInterval;
+    if (score < 5) {
+      newInterval = 2.0;
+    } else if (score >= 5 && score < 15) {
+      newInterval = 1.5;
+    } else {
+      newInterval = 1.0;
+    }
+
+    if (GameConfig.pipeInterval != newInterval) {
+      GameConfig.pipeInterval = newInterval;
       restartInterval();
     }
   }
