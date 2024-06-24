@@ -82,6 +82,8 @@ class Bird extends SpriteComponent
     position = Vector2(50, gameRef.size.y / 2 - size.y / 2);
     score = 0;
     GameConfig.gameSpeed = 200.0;
+    GameConfig.pipeInterval = 2.0;
+    game.restartInterval();
     game.speedIncreasedAt25 = false;
     game.speedIncreasedAt50 = false;
   }

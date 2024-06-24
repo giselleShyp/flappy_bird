@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
-  Timer interval = Timer(GameConfig.pipeInterval, repeat: true);
+  late Timer interval;
   Bird bird = Bird();
   bool isHitPip = false;
   late TextComponent score;
@@ -33,9 +33,14 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
         score = buildScoreText(),
       ],
     );
-    interval.onTick = () => add(
-          PipGroup(),
-        );
+    interval = Timer(
+      GameConfig.pipeInterval,
+      repeat: true,
+      onTick: () => add(
+        PipGroup(),
+      ),
+    );
+    interval.start();
   }
 
   @override
@@ -43,16 +48,9 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
     super.update(dt);
     interval.update(dt);
     score.text = 'Score : ${bird.score}';
-    // if (bird.score >= 25 && !speedIncreasedAt25) {
-    //   increaseGameSpeed();
-    //   speedIncreasedAt25 = true;
-    // }
-    // if (bird.score >= 50 && !speedIncreasedAt50) {
-    //   increaseGameSpeed();
-    //   speedIncreasedAt50 = true;
-    // }
     // Update game speed based on the current score
     updateGameSpeed(bird.score);
+    updatePipeInterval(bird.score);
   }
 
   @override
@@ -101,12 +99,27 @@ class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
     );
   }
 
-  void increaseGameSpeed() {
-    GameConfig.gameSpeed += 50;
-  }
-
   void updateGameSpeed(int score) {
     GameConfig.gameSpeed = 200 + (score ~/ 5) * 15;
-    debugPrint('${GameConfig.gameSpeed}');
+    debugPrint('GameConfig.gameSpeed : ${GameConfig.gameSpeed}');
+  }
+
+  void updatePipeInterval(int score) {
+    if (score > 10 && GameConfig.pipeInterval != 1.0) {
+      GameConfig.pipeInterval = 1.0;
+      restartInterval();
+    }
+  }
+
+  void restartInterval() {
+    interval.stop();
+    interval = Timer(
+      GameConfig.pipeInterval,
+      repeat: true,
+      onTick: () => add(
+        PipGroup(),
+      ),
+    );
+    interval.start();
   }
 }
