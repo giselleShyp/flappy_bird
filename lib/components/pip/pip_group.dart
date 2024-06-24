@@ -47,8 +47,8 @@ class PipGroup extends PositionComponent with HasGameRef<FlappyBirdGame> {
     }
   }
 
-  void updateScore() {
+  void updateScore() async {
     gameRef.bird.score += 1;
-    FlameAudio.play(GameAssets.point);
+    await FlameAudio.play(GameAssets.point);
   }
 }

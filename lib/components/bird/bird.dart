@@ -46,7 +46,7 @@ class Bird extends SpriteComponent
     }
   }
 
-  void fly() {
+  void fly() async {
     add(
       MoveByEffect(
         Vector2(0, GameConfig.gravity),
@@ -55,7 +55,7 @@ class Bird extends SpriteComponent
       ),
     );
     //  current = BirdMovement.up;
-    FlameAudio.play(GameAssets.flying);
+    await FlameAudio.play(GameAssets.flying);
   }
 
   @override
